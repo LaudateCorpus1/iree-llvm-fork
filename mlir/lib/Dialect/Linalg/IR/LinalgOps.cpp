@@ -1634,7 +1634,7 @@ struct FoldTensorCastConsumerOp : public OpRewritePattern<tensor::CastOp> {
     resultTypes[resultNumber] = resultType;
     Operation *newOp = linalgOp.clone(rewriter, loc, resultTypes, newOperands);
 
-    if (!resultValue.hasOneUse()) {
+    if (!linalgOp->hasOneUse()) {
       SmallVector<Value> results(newOp->result_begin(), newOp->result_end());
       // Create a tensor.cast operation back to the original type.
       Value castBack = rewriter.create<tensor::CastOp>(
